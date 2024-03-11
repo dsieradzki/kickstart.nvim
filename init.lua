@@ -213,7 +213,7 @@ vim.opt.rtp:prepend(lazypath)
 -- [Damian]
 vim.keymap.set('n', '<leader>fc', ':Neotree close<CR>', { desc = '[C]lose file tree' })
 vim.keymap.set('n', '<leader>ft', ':Neotree source=filesystem reveal=true position=left<CR>', { desc = 'File [T]ree' })
-
+vim.keymap.set('n', '<leader>t', ':terminal<CR>', { desc = '[T]erminal' })
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
