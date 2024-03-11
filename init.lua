@@ -1,4 +1,4 @@
---[[
+--[[ini
 
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
@@ -210,7 +210,7 @@ if not vim.loop.fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
--- Damian keymaps
+-- [Damian]
 vim.keymap.set('n', '<leader>fc', ':Neotree close<CR>', { desc = '[C]lose file tree' })
 vim.keymap.set('n', '<leader>ft', ':Neotree source=filesystem reveal=true position=left<CR>', { desc = 'File [T]ree' })
 
@@ -227,7 +227,7 @@ vim.keymap.set('n', '<leader>ft', ':Neotree source=filesystem reveal=true positi
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
 
-  -- Damian's plugins installation
+  -- [Damian]
   {
     'nvim-neo-tree/neo-tree.nvim',
     branch = 'v3.x',
@@ -237,6 +237,26 @@ require('lazy').setup({
       'MunifTanjim/nui.nvim',
       -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
     },
+  },
+  {
+    'nvim-neotest/neotest',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'antoinemadec/FixCursorHold.nvim',
+      'nvim-treesitter/nvim-treesitter',
+      'rouge8/neotest-rust',
+      'nvim-neotest/neotest-go',
+    },
+    config = function()
+      require('neotest').setup {
+        adapters = {
+          require 'neotest-rust' {
+            args = { '--no-capture' },
+          },
+          require 'neotest-go' {},
+        },
+      }
+    end,
   },
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
@@ -299,7 +319,8 @@ require('lazy').setup({
         ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
         ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-        ['<leader>f'] = { name = '[F]iles', _ = 'which_key_ignore' }, -- Damian change
+        ['<leader>f'] = { name = '[F]iles', _ = 'which_key_ignore' }, -- [Damian]
+        ['<leader>ct'] = { name = 'LSP: [C]ode [T]ests', _ = 'which_key_ignore' }, -- [Damian]
       }
     end,
   },
@@ -511,6 +532,19 @@ require('lazy').setup({
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+
+          -- [Damian]
+
+          map('<leader>ctr', require('neotest').run.run, '[R]un the nearest test')
+          map('<leader>cts', require('neotest').run.stop, '[S]top the nearest test')
+          map('<leader>cto', function()
+            require('neotest').output.open { enter = true }
+          end, '[O]pen output')
+          map('<leader>cti', require('neotest').summary.toggle, '[S]ummary')
+          map('<leader>ctf', function()
+            require('neotest').run.run(vim.fn.expand '%')
+          end, 'Run the current [F]ile')
+          -- [Damian]
 
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
