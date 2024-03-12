@@ -1,4 +1,4 @@
---[[ini
+--[[
 
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
@@ -173,10 +173,10 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -210,10 +210,6 @@ if not vim.loop.fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
--- [Damian]
-vim.keymap.set('n', '<leader>fc', ':Neotree close<CR>', { desc = '[C]lose file tree' })
-vim.keymap.set('n', '<leader>ft', ':Neotree source=filesystem reveal=true position=left<CR>', { desc = 'File [T]ree' })
-vim.keymap.set('n', '<leader>t', ':terminal<CR>', { desc = '[T]erminal' })
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
@@ -226,50 +222,6 @@ vim.keymap.set('n', '<leader>t', ':terminal<CR>', { desc = '[T]erminal' })
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
-
-  -- [Damian]
-  {
-    'nvim-neo-tree/neo-tree.nvim',
-    branch = 'v3.x',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
-      'MunifTanjim/nui.nvim',
-      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-    },
-    opts = {
-      filesystem = {
-        follow_current_file = {
-          enabled = true, -- This will find and focus the file in the active buffer every time
-          --               -- the current file is changed while the tree is open.
-          leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
-        },
-        group_empty_dirs = true, -- when true, empty folders will be grouped together
-      },
-    },
-  },
-  {
-    'nvim-neotest/neotest',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'antoinemadec/FixCursorHold.nvim',
-      'nvim-treesitter/nvim-treesitter',
-      'rouge8/neotest-rust',
-      'nvim-neotest/neotest-go',
-      'rcasia/neotest-java',
-    },
-    config = function()
-      require('neotest').setup {
-        adapters = {
-          require 'neotest-rust' {
-            args = { '--no-capture' },
-          },
-          require 'neotest-go' {},
-          require 'neotest-java' {},
-        },
-      }
-    end,
-  },
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
@@ -331,8 +283,6 @@ require('lazy').setup({
         ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
         ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-        ['<leader>f'] = { name = '[F]iles', _ = 'which_key_ignore' }, -- [Damian]
-        ['<leader>ct'] = { name = 'LSP: [C]ode [T]ests', _ = 'which_key_ignore' }, -- [Damian]
       }
     end,
   },
@@ -544,19 +494,6 @@ require('lazy').setup({
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-
-          -- [Damian]
-
-          map('<leader>ctr', require('neotest').run.run, '[R]un the nearest test')
-          map('<leader>cts', require('neotest').run.stop, '[S]top the nearest test')
-          map('<leader>cto', function()
-            require('neotest').output.open { enter = true }
-          end, '[O]pen output')
-          map('<leader>cti', require('neotest').summary.toggle, '[S]ummary')
-          map('<leader>ctf', function()
-            require('neotest').run.run(vim.fn.expand '%')
-          end, 'Run the current [F]ile')
-          -- [Damian]
 
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
@@ -886,7 +823,7 @@ require('lazy').setup({
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {
   ui = {
     -- If you have a Nerd Font, set icons to an empty table which will use the
