@@ -237,6 +237,16 @@ require('lazy').setup({
       'MunifTanjim/nui.nvim',
       -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
     },
+    opts = {
+      filesystem = {
+        follow_current_file = {
+          enabled = true, -- This will find and focus the file in the active buffer every time
+          --               -- the current file is changed while the tree is open.
+          leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
+        },
+        group_empty_dirs = true, -- when true, empty folders will be grouped together
+      },
+    },
   },
   {
     'nvim-neotest/neotest',
@@ -246,6 +256,7 @@ require('lazy').setup({
       'nvim-treesitter/nvim-treesitter',
       'rouge8/neotest-rust',
       'nvim-neotest/neotest-go',
+      'rcasia/neotest-java',
     },
     config = function()
       require('neotest').setup {
@@ -254,6 +265,7 @@ require('lazy').setup({
             args = { '--no-capture' },
           },
           require 'neotest-go' {},
+          require 'neotest-java' {},
         },
       }
     end,
@@ -594,6 +606,12 @@ require('lazy').setup({
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
         tsserver = {},
+        -- To support lombok:
+        -- wget https://projectlombok.org/downloads/lombok.jar
+        -- mkdir -p ~/.local/share/java
+        -- mv lombok.jar ~/.local/share/java/lombok.jar
+        -- export JDTLS_JVM_ARGS="-javaagent:$HOME/.local/share/java/lombok.jar"
+        jdtls = {},
         --
 
         lua_ls = {
