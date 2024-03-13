@@ -350,6 +350,15 @@ require('lazy').setup({
         --   },
         -- },
         -- pickers = {}
+        defaults = {
+          mappings = {
+            -- [Damian] add possibility do delete buffer from list
+            n = {
+              ['<c-d>'] = require('telescope.actions').delete_buffer,
+              ['<C-h>'] = 'which_key',
+            }, -- n
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),

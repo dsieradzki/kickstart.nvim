@@ -83,4 +83,19 @@ return {
       })
     end,
   },
+  {
+    'ggandor/leap.nvim',
+    opts = {
+      case_sensitive = false,
+      safe_labels = {}, -- disable auto-jumping to the first match; doesn't work on one unique target
+      max_phase_one_targets = 0, -- first char won't show possible matches
+      max_highlighted_traversal_targets = 10,
+    },
+    config = function(_, opts)
+      local leap = require 'leap'
+      leap.setup(opts)
+      vim.keymap.set('n', 'f', '<Plug>(leap-forward)')
+      vim.keymap.set('n', 'F', '<Plug>(leap-backward)')
+    end,
+  },
 }
