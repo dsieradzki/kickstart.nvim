@@ -556,6 +556,7 @@ require('lazy').setup({
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
         tsserver = {},
+        tailwindcss = {},
         -- To support lombok:
         -- wget https://projectlombok.org/downloads/lombok.jar
         -- mkdir -p ~/.local/share/java
