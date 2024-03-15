@@ -3,6 +3,8 @@
 --
 -- See the kickstart.nvim README for more information
 
+vim.keymap.set('n', '<leader>t', ':terminal<CR>', { desc = 'Open [T]erminal' })
+
 return {
   {
     'nvim-neo-tree/neo-tree.nvim',
@@ -25,12 +27,11 @@ return {
       }
 
       require('which-key').register {
-        ['<leader>f'] = { name = '[F]iles', _ = 'which_key_ignore' },
+        ['<leader>n'] = { name = '[N]eo tree', _ = 'which_key_ignore' },
       }
 
-      vim.keymap.set('n', '<leader>fc', ':Neotree close<CR>', { desc = '[C]lose file tree' })
-      vim.keymap.set('n', '<leader>ft', ':Neotree source=filesystem reveal=true position=left<CR>', { desc = 'File [T]ree' })
-      vim.keymap.set('n', '<leader>t', ':terminal<CR>', { desc = '[T]erminal' })
+      vim.keymap.set('n', '<leader>nc', ':Neotree close<CR>', { desc = '[C]lose Neotree' })
+      vim.keymap.set('n', '<leader>no', ':Neotree source=filesystem reveal=true position=left<CR>', { desc = '[O]pen Neotree' })
     end,
   },
 
