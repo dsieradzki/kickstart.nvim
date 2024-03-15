@@ -3,7 +3,11 @@
 --
 -- See the kickstart.nvim README for more information
 
-vim.keymap.set('n', '<leader>t', ':terminal<CR>', { desc = 'Open [T]erminal' })
+require('which-key').register {
+  ['<leader>t'] = { name = '[T]erminal', _ = 'which_key_ignore' },
+}
+vim.keymap.set('n', '<leader>tt', ':terminal<CR>', { desc = 'Open [T]erminal' })
+vim.keymap.set('n', '<leader>tb', ':20 split term://${SHELL}<CR>', { desc = 'Open [T]erminal in split' })
 
 return {
   {
