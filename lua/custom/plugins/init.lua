@@ -6,8 +6,8 @@
 require('which-key').register {
   ['<leader>t'] = { name = '[T]erminal', _ = 'which_key_ignore' },
 }
-vim.keymap.set('n', '<leader>tt', ':terminal<CR>', { desc = 'Open [T]erminal' })
-vim.keymap.set('n', '<leader>tb', ':20 split term://${SHELL}<CR>', { desc = 'Open [T]erminal in split' })
+vim.keymap.set('n', '<leader>tt', ':terminal<CR>', { desc = 'Open [T]erminal', silent = true })
+vim.keymap.set('n', '<leader>tb', ':20 split term://${SHELL}<CR>', { desc = 'Open [T]erminal in split', silent = true })
 
 return {
   {
@@ -34,8 +34,8 @@ return {
         ['<leader>n'] = { name = '[N]eo tree', _ = 'which_key_ignore' },
       }
 
-      vim.keymap.set('n', '<leader>nc', ':Neotree close<CR>', { desc = '[C]lose Neotree' })
-      vim.keymap.set('n', '<leader>no', ':Neotree source=filesystem reveal=true position=left<CR>', { desc = '[O]pen Neotree' })
+      vim.keymap.set('n', '<leader>nc', ':Neotree close<CR>', { desc = '[C]lose Neotree', silent = true })
+      vim.keymap.set('n', '<leader>no', ':Neotree source=filesystem reveal=true position=left<CR>', { desc = '[O]pen Neotree', silent = true })
     end,
   },
 
@@ -101,6 +101,21 @@ return {
       leap.setup(opts)
       vim.keymap.set('n', 'f', '<Plug>(leap-forward)')
       vim.keymap.set('n', 'F', '<Plug>(leap-backward)')
+    end,
+  },
+  {
+    'NeogitOrg/neogit',
+    dependencies = {
+      'nvim-lua/plenary.nvim', -- required
+      'sindrets/diffview.nvim', -- optional - Diff integration
+
+      -- Only one of these is needed, not both.
+      'nvim-telescope/telescope.nvim', -- optional
+    },
+    config = function()
+      require('neogit').setup {}
+
+      vim.keymap.set('n', '<leader>g', ':Neogit<CR>', { desc = 'Neo[g]it', silent = true })
     end,
   },
 }
