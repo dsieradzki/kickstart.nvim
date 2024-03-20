@@ -5,7 +5,6 @@
 -- Primarily focused on configuring the debugger for Go, but can
 -- be extended to other languages as well. That's why it's called
 -- kickstart.nvim and not kitchen-sink.nvim ;)
-
 return {
   -- NOTE: Yes, you can install new plugins here!
   'mfussenegger/nvim-dap',
@@ -47,13 +46,19 @@ return {
       },
     }
 
-    -- CONFIG
     dap.adapters.lldb = {
       type = 'executable',
       command = '/usr/bin/lldb-dap', -- adjust as needed
       name = 'lldb',
     }
-    -- END
+
+    -- Signs
+    vim.api.nvim_set_hl(0, 'DapBreakpointConditionLine', { bold = true })
+
+    vim.fn.sign_define('DapBreakpoint', { text = '', texthl = 'DapUIStop', linehl = '', numhl = 'DapUIStop' })
+    vim.fn.sign_define('DapBreakpointCondition', { text = '󰕹', texthl = 'DapUIStop', linehl = 'DapBreakpointConditionLine', numhl = 'DapUIStop' })
+    vim.fn.sign_define('DapBreakpointRejected', { text = '󱠳', texthl = 'DapUIStop', linehl = '', numhl = 'DapUIStop' })
+
     -- Basic debugging keymaps, feel free to change to your liking!
     vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
     vim.keymap.set('n', '<F1>', dap.step_into, { desc = 'Debug: Step Into' })
@@ -73,15 +78,15 @@ return {
       icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
       controls = {
         icons = {
-          pause = '⏸',
-          play = '▶',
-          step_into = '⏎',
-          step_over = '⏭',
-          step_out = '⏮',
-          step_back = 'b',
-          run_last = '▶▶',
-          terminate = '⏹',
-          disconnect = '⏏',
+          pause = '',
+          play = '',
+          step_into = '',
+          step_over = '',
+          step_out = '',
+          step_back = '',
+          run_last = '',
+          terminate = '',
+          disconnect = '',
         },
       },
     }
