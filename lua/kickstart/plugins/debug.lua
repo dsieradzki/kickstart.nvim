@@ -42,9 +42,18 @@ return {
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
         'delve',
+        'codelldb',
+        'cppdbg',
       },
     }
 
+    -- CONFIG
+    dap.adapters.lldb = {
+      type = 'executable',
+      command = '/usr/bin/lldb-dap', -- adjust as needed
+      name = 'lldb',
+    }
+    -- END
     -- Basic debugging keymaps, feel free to change to your liking!
     vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
     vim.keymap.set('n', '<F1>', dap.step_into, { desc = 'Debug: Step Into' })

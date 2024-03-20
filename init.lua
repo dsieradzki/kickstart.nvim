@@ -148,6 +148,9 @@ vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
 
+-- Set high foldlevel to prevent default folding
+vim.opt.foldlevel = 999
+
 -- Show which line your cursor is on
 vim.opt.cursorline = true
 
@@ -569,7 +572,7 @@ require('lazy').setup({
         -- mkdir -p ~/.local/share/java
         -- mv lombok.jar ~/.local/share/java/lombok.jar
         -- export JDTLS_JVM_ARGS="-javaagent:$HOME/.local/share/java/lombok.jar"
-        jdtls = {},
+        -- jdtls = {},
         --
 
         lua_ls = {
@@ -848,7 +851,7 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
 
