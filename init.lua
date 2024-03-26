@@ -214,6 +214,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Enabe global functions helpful in plugin development
+require 'custom.globals'
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -594,6 +597,18 @@ require('lazy').setup({
               },
               -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
               -- diagnostics = { disable = { 'missing-fields' } },
+              diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = { 'vim' },
+              },
+              workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = vim.api.nvim_get_runtime_file('', true),
+              },
+              -- Do not send telemetry data containing a randomized but unique identifier
+              telemetry = {
+                enable = false,
+              },
             },
           },
         },
@@ -689,15 +704,16 @@ require('lazy').setup({
       -- Adds other completion capabilities.
       --  nvim-cmp does not ship with all sources by default. They are split
       --  into multiple repos for maintenance purposes.
+      'hrsh7th/cmp-nvim-lua',
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      'hrsh7th/cmp-buffer',
     },
     config = function()
       -- See `:help cmp`
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
       luasnip.config.setup {}
-
       cmp.setup {
         snippet = {
           expand = function(args)
@@ -753,9 +769,29 @@ require('lazy').setup({
           --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
         },
         sources = {
+          { name = 'nvim_lua' },
           { name = 'nvim_lsp' },
-          { name = 'luasnip' },
           { name = 'path' },
+          { name = 'luasnip' },
+          { name = 'buffer', keyword_length = 5 },
+        },
+        formatting = {
+          format = require('lspkind').cmp_format {
+            mode = 'symbol_text',
+            show_labelDetails = true, -- show labelDetails in menu. Disabled by default
+            menu = {
+              buffer = '[buf]',
+              nvim_lsp = '[LSP]',
+              nvim_lua = '[api]',
+              path = '[path]',
+              luasnip = '[snip]',
+            },
+            -- The function below will be called before any actual modifications from lspkind
+            -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+            before = function(entry, vim_item)
+              return vim_item
+            end,
+          },
         },
       }
     end,
@@ -888,7 +924,6 @@ require('lazy').setup({
   require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
-
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --

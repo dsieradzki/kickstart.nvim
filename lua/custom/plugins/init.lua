@@ -197,4 +197,7 @@ return {
       direction = 'float',
     },
   },
+  {
+    'onsails/lspkind.nvim',
+  },
 }
