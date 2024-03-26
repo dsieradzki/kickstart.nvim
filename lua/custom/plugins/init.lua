@@ -7,7 +7,7 @@ require('which-key').register {
   ['<leader>t'] = { name = '[T]erminal', _ = 'which_key_ignore' },
 }
 vim.keymap.set('n', '<leader>tt', ':terminal<CR>', { desc = 'Open [T]erminal', silent = true })
-vim.keymap.set('n', '<leader>tb', ':20 split term://${SHELL}<CR>', { desc = 'Open [T]erminal in split', silent = true })
+vim.keymap.set('n', '<leader>tb', ':20 split term://${SHELL}<CR>', { desc = 'Open [T]erminal bottom', silent = true })
 
 return {
   {
@@ -199,5 +199,82 @@ return {
   },
   {
     'onsails/lspkind.nvim',
+  },
+  {
+    'nvimdev/dashboard-nvim',
+    event = 'VimEnter',
+    config = function()
+      require('dashboard').setup {
+        theme = 'doom',
+        config = {
+          header = {
+            [[                                                     ]],
+            [[                                                     ]],
+            [[                                                     ]],
+            [[                                                     ]],
+            [[  ███▄    █ ▓█████  ▒█████   ██▒   █▓ ██▓ ███▄ ▄███▓ ]],
+            [[  ██ ▀█   █ ▓█   ▀ ▒██▒  ██▒▓██░   █▒▓██▒▓██▒▀█▀ ██▒ ]],
+            [[ ▓██  ▀█ ██▒▒███   ▒██░  ██▒ ▓██  █▒░▒██▒▓██    ▓██░ ]],
+            [[ ▓██▒  ▐▌██▒▒▓█  ▄ ▒██   ██░  ▒██ █░░░██░▒██    ▒██  ]],
+            [[ ▒██░   ▓██░░▒████▒░ ████▓▒░   ▒▀█░  ░██░▒██▒   ░██▒ ]],
+            [[ ░ ▒░   ▒ ▒ ░░ ▒░ ░░ ▒░▒░▒░    ░ ▐░  ░▓  ░ ▒░   ░  ░ ]],
+            [[ ░ ░░   ░ ▒░ ░ ░  ░  ░ ▒ ▒░    ░ ░░   ▒ ░░  ░      ░ ]],
+            [[    ░   ░ ░    ░   ░ ░ ░ ▒       ░░   ▒ ░░      ░    ]],
+            [[          ░    ░  ░    ░ ░        ░   ░         ░    ]],
+            [[                                 ░                   ]],
+            [[                                                     ]],
+          },
+          center = {
+            {
+              icon = '󱎰 ',
+              icon_hl = 'Title',
+              desc = 'Search Home Files',
+              desc_hl = 'String',
+              key = 'F',
+              keymap = 'SPC s',
+              key_hl = 'Number',
+              key_format = ' %s', -- remove default surrounding `[]`
+              action = "require'telescope.builtin'.find_files { search_dirs = { vim.env.HOME }, hidden = false }",
+            },
+            {
+              icon = '󱁴 ',
+              desc = 'Search Recent Files',
+              key = '.',
+              keymap = 'SPC s',
+              key_format = ' %s', -- remove default surrounding `[]`
+              action = 'Telescope oldfiles',
+            },
+            {
+              icon = ' ',
+              desc = 'Search Neovim files',
+              key = 'n',
+              keymap = 'SPC s',
+              key_format = ' %s', -- remove default surrounding `[]`
+              action = "require'telescope.builtin'.find_files { cwd = vim.fn.stdpath 'config' }",
+            },
+
+            {
+              icon = '󰟒 ',
+              desc = 'Projects',
+              key = 'p',
+              keymap = 'SPC',
+              key_format = ' %s', -- remove default surrounding `[]`
+              action = 'Telescope project',
+            },
+
+            {
+              icon = '󰘥 ',
+              desc = 'Search Help',
+              key = 'h',
+              keymap = 'SPC s',
+              key_format = ' %s', -- remove default surrounding `[]`
+              action = 'Telescope help_tags',
+            },
+          },
+          --footer = {}, --your footer
+        },
+      }
+    end,
+    dependencies = { { 'nvim-tree/nvim-web-devicons' } },
   },
 }
