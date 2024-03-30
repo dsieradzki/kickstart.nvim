@@ -145,17 +145,6 @@ return {
       'rcarriga/nvim-notify',
     },
   },
-  { -- noice.nvim supports LSP messages but it's doing a mess, because it stacking messages rather than update, this works properly
-    'mrded/nvim-lsp-notify',
-    dependencies = {
-      'rcarriga/nvim-notify',
-    },
-    config = function()
-      require('lsp-notify').setup {
-        notify = require 'notify',
-      }
-    end,
-  },
   {
     'akinsho/toggleterm.nvim',
     version = '*',
