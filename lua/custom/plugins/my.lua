@@ -1,9 +1,6 @@
 return {
-  -- {
-  --   'dsieradzki/nvim-runner',
-  -- },
   {
-    dir = '/home/damian/Dev/nvim-runner',
+    'dsieradzki/nvim-runner',
     config = function()
       require('runner').setup {
         telescope = true,
